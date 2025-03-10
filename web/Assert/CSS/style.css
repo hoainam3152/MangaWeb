@@ -1,0 +1,155 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .anime-title{
+      font-size: 1.2rem;
+    margin: 10px 0;
+  }
+  
+  .movie-title{
+      font-size: 1.2rem;
+    margin: 10px 0;
+  }
+  
+  .banner {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 50px 0;
+  }
+  
+  .banner h1 {
+    font-size: 3rem;
+  }
+  
+  .featured-anime {
+    text-align: center;
+    padding: 50px 0;
+  }
+  
+  .anime-list{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1em;
+  }
+  
+  .anime-card{
+    padding: 50px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .anime-image {
+    margin-right: 20px; /* Add space between the image and text */
+  }
+  
+  .anime-img{
+    max-width: 200px; 
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  anime-details {
+    flex: 1; /* Expand the details container to fill the remaining space */
+  }
+  
+  .anime-title {
+    margin-top: 5px;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .anime-type {
+    margin-top: 15px;
+    font-size: 1.5rem;
+    color: #888;
+  }
+  
+  .anime-description {
+    font-size: 2rem;
+    margin-top: 25px;
+  }
+  
+  .anime-rating{
+    font-size: 1.5rem;
+    color: #888;
+  
+  }
+  
+  /* Styles for hover effect */
+  .anime-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .anime-card:hover .anime-title,
+  .anime-card:hover .anime-description {
+    opacity: 1;
+  }
+  
+  .subscription {
+    text-align: center;
+    padding: 50px 0;
+  }
+  
+  .subscription input[type="email"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-right: 10px;
+  }
+  
+  .subscription button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .subscription button:hover {
+    background-color: #444;
+  }
+  
+  .search-bar{
+    display: flex;
+    justify-content: center;
+    transform: translateY(-160%);
+    margin-bottom: 1.5em;
+  }
+  
+  
+  .search-input{
+      color: var(--gray-500, #6B7280);
+      padding: 0.6rem .6rem .6rem 3.6rem;
+      border: 1px solid #D1D5DB;
+      border-radius: 6px 0 0 6px;
+      width: 60%;
+      height: 38px;
+  }
+  
+  .search-btn{
+    color: #000;
+    border-radius: 0px 6px 6px 0px;
+    border: 1px solid var(--gray-300, #D1D5DB);
+    background: var(--gray-50, #F9FAFB);  
+    width: 20%;
+    padding: 9px 11px 9px 17px;
+    height: 38px;
+    font-weight: 500;
+    cursor: pointer;
+  
+  }
+  
+  .search-btn:hover{
+    box-shadow: 1px 1px #A5A5A5;
+  }
