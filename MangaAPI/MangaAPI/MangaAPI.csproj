@@ -21,7 +21,6 @@
     <Folder Include="DTO\Responses\" />
     <Folder Include="DTO\Requests\" />
     <Folder Include="Enums\" />
-    <Folder Include="Helpers\" />
   </ItemGroup>
 
 </Project>

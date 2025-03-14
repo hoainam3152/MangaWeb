@@ -1,3 +1,6 @@
 - https://dev.to/hr21don/build-your-own-anime-search-app-using-jikan-api-4n79
 - https://github.com/hienlth-online/MyApiNetCore6/tree/03_Authentication
 - https://learn.microsoft.com/en-us/aspnet/core/security/?view=aspnetcore-9.0
+
+//create SSL certificate if SSL security error occurs at startup
+- open cmd and run "dotnet dev-certs https --trust"
