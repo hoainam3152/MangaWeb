@@ -1,1 +1,4 @@
 - https://dev.to/hr21don/build-your-own-anime-search-app-using-jikan-api-4n79
+
+//create SSL certificate if SSL security error occurs at startup
+- open cmd and run "dotnet dev-certs https --trust"
