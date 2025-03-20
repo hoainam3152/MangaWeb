@@ -38,9 +38,11 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SecretKey"]))
     };
 });
+builder.Services.AddAutoMapper(typeof(Program));
 
 //Register Service
 builder.Services.AddScoped<IAccountRepository, AccountService>();
+builder.Services.AddScoped<IGenreRepository, GenreService>();
 
 var app = builder.Build();
 
