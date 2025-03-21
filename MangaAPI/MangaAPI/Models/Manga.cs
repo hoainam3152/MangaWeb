@@ -7,6 +7,7 @@ namespace MangaAPI.Models
     public class Manga
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int MangaId { get; set; }
         [StringLength(255)]
         public string Title { get; set; }
