@@ -8,6 +8,7 @@ namespace MangaAPI.Models
     public class Genre
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int GenreId { get; set; }
         [StringLength(100)]
         public string GenreName { get; set; }
