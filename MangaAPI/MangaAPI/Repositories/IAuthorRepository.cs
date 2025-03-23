@@ -7,8 +7,8 @@ namespace MangaAPI.Repositories
     {
         Task<IEnumerable<AuthorResponse>> GetAllAuthorsAsync();
         Task<AuthorResponse> GetAuthorAsync(ulong AuthorId);
-        Task CreateAsync(AuthorCreateRequest request);
-        Task<bool> UpdateAsync(ulong AuthorId, AuthorUpdateRequest request);
+        Task<AuthorResponse> CreateAsync(AuthorRequest request);
+        Task<bool> UpdateAsync(ulong AuthorId, AuthorRequest request);
         Task<bool> DeleteAsync(ulong AuthorId);
     }
 }

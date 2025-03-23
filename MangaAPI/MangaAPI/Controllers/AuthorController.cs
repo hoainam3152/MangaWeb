@@ -64,18 +64,14 @@ namespace MangaAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(AuthorCreateRequest request)
+        public async Task<IActionResult> Create(AuthorRequest request)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    await service.CreateAsync(request);
-                    return CustomResult(ResponseMessage.CREATE_SUCCESSFUL, request, HttpStatusCode.OK);
-                }
-                catch (DbUpdateException dbEx)
-                {
-                    return CustomResult(dbEx.Message, HttpStatusCode.BadRequest);
+                    var author = await service.CreateAsync(request);
+                    return CustomResult(ResponseMessage.CREATE_SUCCESSFUL, author, HttpStatusCode.OK);
                 }
                 catch (Exception ex)
                 {
@@ -89,7 +85,7 @@ namespace MangaAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(ulong id, AuthorUpdateRequest request)
+        public async Task<IActionResult> Update(ulong id, AuthorRequest request)
         {
             if (ModelState.IsValid)
             {
@@ -101,10 +97,6 @@ namespace MangaAPI.Controllers
                         return CustomResult(ResponseMessage.UPDATE_SUCCESSFUL, author, HttpStatusCode.OK);
                     }
                     return CustomResult(ResponseMessage.DATA_NOT_FOUND, HttpStatusCode.NotFound);
-                }
-                catch (DbUpdateException dbEx)
-                {
-                    return CustomResult(dbEx.Message, HttpStatusCode.BadRequest);
                 }
                 catch (Exception ex)
                 {
@@ -131,10 +123,6 @@ namespace MangaAPI.Controllers
                         return CustomResult(ResponseMessage.DELETE_SUCCESSFUL, HttpStatusCode.OK);
                     }
                     return CustomResult(ResponseMessage.DATA_NOT_FOUND, HttpStatusCode.NotFound);
-                }
-                catch (DbUpdateException)
-                {
-                    return CustomResult(ResponseMessage.DELETE_FAILED, HttpStatusCode.BadRequest);
                 }
                 catch (Exception ex)
                 {

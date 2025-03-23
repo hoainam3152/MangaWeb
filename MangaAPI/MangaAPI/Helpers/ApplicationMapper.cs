@@ -13,7 +13,7 @@ namespace MangaAPI.Helpers
             CreateMap<Genre, GenreCreateRequest>().ReverseMap();
 
             CreateMap<Author, AuthorResponse>().ReverseMap();
-            CreateMap<Author, AuthorCreateRequest>().ReverseMap();
+            CreateMap<Author, AuthorRequest>().ReverseMap();
         }
     }
 }

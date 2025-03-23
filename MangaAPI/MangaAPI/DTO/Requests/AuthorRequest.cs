@@ -2,7 +2,7 @@
 
 namespace MangaAPI.DTO.Requests
 {
-    public class AuthorUpdateRequest
+    public class AuthorRequest
     {
         [Required]
         public string AuthorName { get; set; }
