@@ -24,16 +24,15 @@ namespace MangaAPI.Services
             try
             {
                 var genre = await context.Genres.FirstOrDefaultAsync(element => element.GenreId == request.GenreId);
-                if (genre == null)
-                {
-                    if (await context.Genres.AnyAsync(element => element.GenreName == request.GenreName))
+                if (genre != null)  //genre already exists
+                    throw new DbUpdateException(ResponseMessage.DUPLICATE_KEY);
+
+                if (await context.Genres.AnyAsync(element => element.GenreName == request.GenreName))
                         throw new DbUpdateException(ResponseMessage.NAME_EXISTS);
 
-                    var genreCreate = mapper.Map<Genre>(request);
-                    context.Genres.Add(genreCreate);
-                    await context.SaveChangesAsync();
-                }
-                throw new DbUpdateException(ResponseMessage.DUPLICATE_KEY);
+                var genreCreate = mapper.Map<Genre>(request);
+                context.Genres.Add(genreCreate);
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateException dbUpdateException)
             {
@@ -87,7 +86,6 @@ namespace MangaAPI.Services
                         throw new DbUpdateException(ResponseMessage.NAME_EXISTS);
 
                     genre.GenreName = request.GenreName;
-                    //context.Genres.Update(genre);
                     await context.SaveChangesAsync();
                     return true;
                 }

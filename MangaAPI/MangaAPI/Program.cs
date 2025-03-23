@@ -43,6 +43,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 //Register Service
 builder.Services.AddScoped<IAccountRepository, AccountService>();
 builder.Services.AddScoped<IGenreRepository, GenreService>();
+builder.Services.AddScoped<IAuthorRepository, AuthorService>();
 
 var app = builder.Build();
 

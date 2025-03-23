@@ -5,7 +5,7 @@ namespace MangaAPI.Models
     [Table("MangaGenres")]
     public class MangaGenres
     {
-        public int MangaId { get; set; }
+        public ulong MangaId { get; set; }
         public int GenreId { get; set; }
 
         [ForeignKey("MangaId")]

@@ -3,15 +3,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MangaAPI.Models
 {
-    [Tags("Manga")]
+    [Table("Manga")]
     public class Manga
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int MangaId { get; set; }
+        public ulong MangaId { get; set; }
         [StringLength(255)]
         public string Title { get; set; }
-        public int? AuthorId { get; set; }
+        public ulong? AuthorId { get; set; }
         public string? Description { get; set; }
         public int Status { get; set; }
         [StringLength(255)]

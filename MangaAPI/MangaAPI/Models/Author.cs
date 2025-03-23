@@ -8,7 +8,7 @@ namespace MangaAPI.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int AuthorId { get; set; }
+        public ulong AuthorId { get; set; }
         [StringLength(100)]
         public string AuthorName { get; set; }
         public string? Biography { get; set; }
