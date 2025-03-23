@@ -44,6 +44,8 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<IAccountRepository, AccountService>();
 builder.Services.AddScoped<IGenreRepository, GenreService>();
 builder.Services.AddScoped<IAuthorRepository, AuthorService>();
+builder.Services.AddScoped<IMangaRepository, MangaService>();
+//builder.Services.AddScoped<IAuthorRepository, AuthorService>();
 
 var app = builder.Build();
 
