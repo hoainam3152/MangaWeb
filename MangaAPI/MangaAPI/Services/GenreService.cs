@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MangaAPI.DTO.Requests;
 using MangaAPI.DTO.Responses;
+using MangaAPI.Helpers;
 using MangaAPI.Models;
 using MangaAPI.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -18,22 +19,28 @@ namespace MangaAPI.Services
             this.mapper = mapper;
         }
 
-        public async Task<GenreResponse> CreateAsync(GenreCreateRequest request)
+        public async Task CreateAsync(GenreCreateRequest request)
         {
             try
             {
                 var genre = await context.Genres.FirstOrDefaultAsync(element => element.GenreId == request.GenreId);
                 if (genre == null)
                 {
+                    if (await context.Genres.AnyAsync(element => element.GenreName == request.GenreName))
+                        throw new DbUpdateException(ResponseMessage.NAME_EXISTS);
+
                     var genreCreate = mapper.Map<Genre>(request);
                     context.Genres.Add(genreCreate);
                     await context.SaveChangesAsync();
                 }
-                return mapper.Map<GenreResponse>(genre);
+                throw new DbUpdateException(ResponseMessage.DUPLICATE_KEY);
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                throw dbUpdateException;
             }
             catch (Exception e)
             {
-
                 throw new Exception(e.Message);
             }
         }
@@ -53,7 +60,6 @@ namespace MangaAPI.Services
             }
             catch (Exception e)
             {
-
                 throw new Exception(e.Message);
             }
         }
@@ -77,6 +83,9 @@ namespace MangaAPI.Services
                 var genre = await context.Genres.FirstOrDefaultAsync(g => g.GenreId == genreId);
                 if (genre != null)
                 {
+                    if (await context.Genres.AnyAsync(element => element.GenreName == request.GenreName))
+                        throw new DbUpdateException(ResponseMessage.NAME_EXISTS);
+
                     genre.GenreName = request.GenreName;
                     //context.Genres.Update(genre);
                     await context.SaveChangesAsync();
@@ -84,9 +93,12 @@ namespace MangaAPI.Services
                 }
                 return false;
             }
+            catch (DbUpdateException dbUpdateException)
+            {
+                throw dbUpdateException;
+            }
             catch (Exception e)
             {
-
                 throw new Exception(e.Message);
             }
         }
