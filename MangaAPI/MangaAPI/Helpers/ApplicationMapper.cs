@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MangaAPI.DTO.Requests;
 using MangaAPI.DTO.Responses;
+using MangaAPI.Enums;
 using MangaAPI.Models;
 
 namespace MangaAPI.Helpers
@@ -14,6 +15,12 @@ namespace MangaAPI.Helpers
 
             CreateMap<Author, AuthorResponse>().ReverseMap();
             CreateMap<Author, AuthorRequest>().ReverseMap();
+
+            CreateMap<Manga, MangaResponse>().ForMember(
+                    dest => dest.Status,
+                    opt => opt.ConvertUsing(new IntDescriptionConverter(), src => src.Status)
+                ).ReverseMap();
+            CreateMap<Manga, MangaRequest>().ReverseMap();
         }
     }
 }
