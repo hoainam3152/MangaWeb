@@ -1,20 +1,21 @@
-﻿using System.Net;
-using CoreApiResponse;
+﻿using CoreApiResponse;
 using MangaAPI.DTO.Requests;
 using MangaAPI.Helpers;
 using MangaAPI.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace MangaAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GenreController : BaseController
+    public class AuthorController : BaseController
     {
-        private readonly IGenreRepository service;
+        private readonly IAuthorRepository service;
 
-        public GenreController(IGenreRepository service)
+        public AuthorController(IAuthorRepository service)
         {
             this.service = service;
         }
@@ -24,10 +25,10 @@ namespace MangaAPI.Controllers
         {
             try
             {
-                var genres = await service.GetAllGenresAsync();
-                if (genres.Any())
+                var authors = await service.GetAllAuthorsAsync();
+                if (authors.Any())
                 {
-                    return CustomResult(ResponseMessage.SUCCESSFUL, genres, HttpStatusCode.OK);
+                    return CustomResult(ResponseMessage.SUCCESSFUL, authors, HttpStatusCode.OK);
                 }
                 return CustomResult(ResponseMessage.EMPTY, HttpStatusCode.NotFound);
             }
@@ -38,16 +39,16 @@ namespace MangaAPI.Controllers
         }
 
         [HttpGet("id")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(ulong id)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var genre = await service.GetGenreAsync(id);
-                    if (genre != null)
+                    var author = await service.GetAuthorAsync(id);
+                    if (author != null)
                     {
-                        return CustomResult(ResponseMessage.SUCCESSFUL, genre, HttpStatusCode.OK);
+                        return CustomResult(ResponseMessage.SUCCESSFUL, author, HttpStatusCode.OK);
                     }
                     return CustomResult(ResponseMessage.DATA_NOT_FOUND, HttpStatusCode.NotFound);
                 }
@@ -63,7 +64,7 @@ namespace MangaAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(GenreCreateRequest request)
+        public async Task<IActionResult> Create(AuthorCreateRequest request)
         {
             if (ModelState.IsValid)
             {
@@ -88,16 +89,16 @@ namespace MangaAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(int id, GenreUpdateRequest request)
+        public async Task<IActionResult> Update(ulong id, AuthorUpdateRequest request)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var genre = await service.UpdateAsync(id, request);
-                    if (genre)
+                    var author = await service.UpdateAsync(id, request);
+                    if (author)
                     {
-                        return CustomResult(ResponseMessage.UPDATE_SUCCESSFUL, genre, HttpStatusCode.OK);
+                        return CustomResult(ResponseMessage.UPDATE_SUCCESSFUL, author, HttpStatusCode.OK);
                     }
                     return CustomResult(ResponseMessage.DATA_NOT_FOUND, HttpStatusCode.NotFound);
                 }
@@ -117,15 +118,15 @@ namespace MangaAPI.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(ulong id)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var genre = await service.DeleteAsync(id);
+                    var Author = await service.DeleteAsync(id);
 
-                    if (genre)
+                    if (Author)
                     {
                         return CustomResult(ResponseMessage.DELETE_SUCCESSFUL, HttpStatusCode.OK);
                     }
