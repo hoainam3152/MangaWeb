@@ -20,5 +20,6 @@
         public const string DATA_NOT_FOUND = "Data Not Found";
         public const string DUPLICATE_KEY = "Duplicate Key";
         public const string REFERENCE_ERROR = "Reference Error";
+        public const string NAME_EXISTS = "Name Already Exists";
     }
 }

@@ -69,20 +69,16 @@ namespace MangaAPI.Controllers
             {
                 try
                 {
-                    var genre = await service.CreateAsync(request);
-                    if (genre == null)
-                    {
-                        return CustomResult(ResponseMessage.CREATE_SUCCESSFUL, request, HttpStatusCode.OK);
-                    }
-                    return CustomResult(ResponseMessage.DUPLICATE_KEY, HttpStatusCode.Conflict);
+                    await service.CreateAsync(request);
+                    return CustomResult(ResponseMessage.CREATE_SUCCESSFUL, request, HttpStatusCode.OK);
                 }
-                catch (DbUpdateException)
+                catch (DbUpdateException dbEx)
                 {
-                    return CustomResult(ResponseMessage.CREATE_FAILED, HttpStatusCode.BadRequest);
+                    return CustomResult(dbEx.Message, HttpStatusCode.BadRequest);
                 }
                 catch (Exception ex)
                 {
-                    return CustomResult(ex.Message, HttpStatusCode.BadRequest);
+                    return CustomResult(ex.InnerException!.Message, HttpStatusCode.BadRequest);
                 }
             }
             else
@@ -105,13 +101,13 @@ namespace MangaAPI.Controllers
                     }
                     return CustomResult(ResponseMessage.DATA_NOT_FOUND, HttpStatusCode.NotFound);
                 }
-                catch (DbUpdateException)
+                catch (DbUpdateException dbEx)
                 {
-                    return CustomResult(ResponseMessage.UPDATE_FAILED, HttpStatusCode.BadRequest);
+                    return CustomResult(dbEx.Message, HttpStatusCode.BadRequest);
                 }
                 catch (Exception ex)
                 {
-                    return CustomResult(ex.Message, HttpStatusCode.BadRequest);
+                    return CustomResult(ex.InnerException!.Message, HttpStatusCode.BadRequest);
                 }
             }
             else
@@ -141,7 +137,7 @@ namespace MangaAPI.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return CustomResult(ex.Message, HttpStatusCode.BadRequest);
+                    return CustomResult(ex.InnerException!.Message, HttpStatusCode.BadRequest);
                 }
             }
             else
