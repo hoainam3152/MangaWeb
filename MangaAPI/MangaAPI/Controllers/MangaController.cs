@@ -20,7 +20,6 @@ namespace MangaAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = ApplicationRole.Customer)]
         public async Task<IActionResult> GetAll()
         {
             try
@@ -39,7 +38,6 @@ namespace MangaAPI.Controllers
         }
 
         [HttpGet("id")]
-        [Authorize(Roles = ApplicationRole.Admin)]
         public async Task<IActionResult> GetById(ulong id)
         {
             if (ModelState.IsValid)
