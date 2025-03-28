@@ -10,10 +10,12 @@ formEl.addEventListener('submit', async(e) => {
   let searchString = searchEl.value;
 
   try {
-    const res = await fetch(`https://localhost:7162/api/Manga/id?id=${searchString}`);
+    const res = await fetch(`https://api.jikan.moe/v4/anime?q=${searchString}`);
     const data = await res.json();
     console.log(data)
 
+    const truncatedSynopsis = truncateText(data.data[0].synopsis, 300);
+    data.data.synopsis = truncatedSynopsis;
     const animeCardHTML = generateAnimeCard(data);
     animeEl.innerHTML = animeCardHTML;
   } catch (err) {
@@ -25,14 +27,14 @@ formEl.addEventListener('submit', async(e) => {
     return `
       <div class="anime-card">
         <div class="anime-image">
-        <img src="../Image/default.jpeg" class="anime-img">
+        <img src="${data.data[0].images.jpg.large_image_url}" class="anime-img">
         </div>
         <div class="anime-details">
-        <h3 class="anime-title">${data.data.title}</h3>
-        <span class="anime-type">${data.data.authorId}</span>
-        <p class="anime-description">${data.data.description}</p>
-        <p class="anime-rating">${data.data.status}</p>
-        <p class="anime-year">${data.data.releaseDate}</p>
+        <h3 class="anime-title">${data.data[0].title}</h3>
+        <span class="anime-type">${data.data[0].authorId}</span>
+        <p class="anime-description">${data.data[0].description}</p>
+        <p class="anime-rating">${data.data[0].status}</p>
+        <p class="anime-year">${data.data[0].releaseDate}</p>
         </div>
       </div>
     `;
