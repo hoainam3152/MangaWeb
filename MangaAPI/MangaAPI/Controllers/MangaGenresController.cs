@@ -1,34 +1,33 @@
-﻿using CoreApiResponse;
-using MangaAPI.DTO.Requests;
+﻿using MangaAPI.DTO.Requests;
 using MangaAPI.Helpers;
-using MangaAPI.Repositories;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using Microsoft.AspNetCore.Mvc;
+using MangaGenresAPI.Repositories;
+using CoreApiResponse;
+using Microsoft.EntityFrameworkCore;
 
 namespace MangaAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MangaController : BaseController
+    public class MangaGenresController : BaseController
     {
-        private readonly IMangaRepository service;
+        private readonly IMangaGenresRepository service;
 
-        public MangaController(IMangaRepository service)
+        public MangaGenresController(IMangaGenresRepository service)
         {
             this.service = service;
         }
 
         [HttpGet]
-        [Authorize(Roles = ApplicationRole.Customer)]
         public async Task<IActionResult> GetAll()
         {
             try
             {
-                var mangas = await service.GetAllMangasAsync();
-                if (mangas.Any())
+                var MangaGenress = await service.GetAllMangaGenressAsync();
+                if (MangaGenress.Any())
                 {
-                    return CustomResult(ResponseMessage.SUCCESSFUL, mangas, HttpStatusCode.OK);
+                    return CustomResult(ResponseMessage.SUCCESSFUL, MangaGenress, HttpStatusCode.OK);
                 }
                 return CustomResult(ResponseMessage.EMPTY, HttpStatusCode.NotFound);
             }
@@ -39,17 +38,16 @@ namespace MangaAPI.Controllers
         }
 
         [HttpGet("id")]
-        [Authorize(Roles = ApplicationRole.Admin)]
-        public async Task<IActionResult> GetById(ulong id)
+        public async Task<IActionResult> GetById(ulong mangaId, int genreId)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var manga = await service.GetMangaAsync(id);
-                    if (manga != null)
+                    var MangaGenres = await service.GetMangaGenresAsync(mangaId, genreId);
+                    if (MangaGenres != null)
                     {
-                        return CustomResult(ResponseMessage.SUCCESSFUL, manga, HttpStatusCode.OK);
+                        return CustomResult(ResponseMessage.SUCCESSFUL, MangaGenres, HttpStatusCode.OK);
                     }
                     return CustomResult(ResponseMessage.DATA_NOT_FOUND, HttpStatusCode.NotFound);
                 }
@@ -65,39 +63,18 @@ namespace MangaAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(MangaRequest request)
+        public async Task<IActionResult> Create(MangaGenresRequest request)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var manga = await service.CreateAsync(request);
-                    return CustomResult(ResponseMessage.CREATE_SUCCESSFUL, manga, HttpStatusCode.OK);
+                    var MangaGenres = await service.CreateAsync(request);
+                    return CustomResult(ResponseMessage.CREATE_SUCCESSFUL, MangaGenres, HttpStatusCode.OK);
                 }
-                catch (Exception ex)
+                catch (DbUpdateException dbEx)
                 {
-                    return CustomResult(ex.InnerException!.Message, HttpStatusCode.BadRequest);
-                }
-            }
-            else
-            {
-                return BadRequest(ModelState);
-            }
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> Update(ulong id, MangaRequest request)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    var manga = await service.UpdateAsync(id, request);
-                    if (manga)
-                    {
-                        return CustomResult(ResponseMessage.UPDATE_SUCCESSFUL, manga, HttpStatusCode.OK);
-                    }
-                    return CustomResult(ResponseMessage.DATA_NOT_FOUND, HttpStatusCode.NotFound);
+                    return CustomResult(dbEx.Message, HttpStatusCode.BadRequest);
                 }
                 catch (Exception ex)
                 {
@@ -111,14 +88,14 @@ namespace MangaAPI.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(ulong id)
+        public async Task<IActionResult> Delete(ulong mangaId, int genreId)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var manga = await service.DeleteAsync(id);
-                    if (manga)
+                    var MangaGenres = await service.DeleteAsync(mangaId, genreId);
+                    if (MangaGenres)
                     {
                         return CustomResult(ResponseMessage.DELETE_SUCCESSFUL, HttpStatusCode.OK);
                     }

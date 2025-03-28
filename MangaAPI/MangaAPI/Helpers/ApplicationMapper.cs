@@ -21,6 +21,9 @@ namespace MangaAPI.Helpers
                     opt => opt.ConvertUsing(new IntDescriptionConverter(), src => src.Status)
                 ).ReverseMap();
             CreateMap<Manga, MangaRequest>().ReverseMap();
+
+            CreateMap<MangaGenres, MangaGenresResponse>().ReverseMap();
+            CreateMap<MangaGenres, MangaGenresRequest>().ReverseMap();
         }
     }
 }

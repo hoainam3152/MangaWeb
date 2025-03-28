@@ -2,9 +2,7 @@
 using MangaAPI.DTO.Requests;
 using MangaAPI.Helpers;
 using MangaAPI.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Net;
 
 namespace MangaAPI.Controllers
