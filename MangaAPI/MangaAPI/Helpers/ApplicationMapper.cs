@@ -19,6 +19,10 @@ namespace MangaAPI.Helpers
             CreateMap<Manga, MangaResponse>().ForMember(
                     dest => dest.Status,
                     opt => opt.ConvertUsing(new IntDescriptionConverter(), src => src.Status)
+                ).ForMember(
+                    dest => dest.Author,
+                    opt => opt.MapFrom(src => src.Author != null ? src.Author.AuthorName : "Đang Cập Nhật")
+
                 ).ReverseMap();
             CreateMap<Manga, MangaRequest>().ReverseMap();
 

@@ -1,0 +1,88 @@
+.container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 50px;
+}
+
+.panel {
+    display: flex;
+    gap: 24px;
+}
+
+.description {
+    margin-top: 20px;
+}
+
+.description p {
+    font-size: 18px;
+}
+
+.left-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 30%;
+    align-items: center;
+}
+
+.left-panel img {
+    max-width: 200px;
+    height: 300px;
+    border-radius: 4px;
+}
+
+.right-panel {
+    background: #f4f5f5;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 70%;
+}
+
+.manga-detail {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: -moz-fit-content;
+    height: fit-content;
+    position: relative;
+}
+
+.manga-detail-information {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 20px;
+}
+
+.manga-detail-information-item {
+    align-items: flex-start;
+    display: flex;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.item-title {
+    align-items: center;
+    color: #212f3f;
+    display: flex;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    gap: 8px;
+    letter-spacing: .14px;
+    line-height: 22px;
+    width: 30%;
+}
+
+.item-value {
+    color: #7f878f;
+    font-size: 20px;
+    font-style: normal;
+    letter-spacing: .14px;
+    line-height: 22px;
+    width: 70%;
+}

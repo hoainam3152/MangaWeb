@@ -57,7 +57,9 @@ namespace MangaAPI.Services
 
         public async Task<MangaResponse> GetMangaAsync(ulong mangaId)
         {
-            var manga = await context.Mangas.FirstOrDefaultAsync(g => g.MangaId == mangaId);
+            var manga = await context.Mangas
+                .Include(ma => ma.Author)
+                .FirstOrDefaultAsync(g => g.MangaId == mangaId);
             return mapper.Map<MangaResponse>(manga);
         }
 
