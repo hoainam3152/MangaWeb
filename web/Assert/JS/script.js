@@ -10,50 +10,46 @@ formEl.addEventListener('submit', async(e) => {
   let searchString = searchEl.value;
 
   try {
-    const res = await fetch(`https://localhost:7162/api/Manga/id?id=${searchString}`);
-    const data = await res.json();
-    console.log(data)
 
-    const animeCardHTML = generateAnimeCard(data);
-    animeEl.innerHTML = animeCardHTML;
   } catch (err) {
     console.log(err);
     animeEl.innerHTML = `<p>${err}</p>`;
   }
 })
-  function generateAnimeCard(data) {
-    return `
-      <div class="anime-card">
-        <div class="anime-image">
-        <img src="../Image/default.jpeg" class="anime-img">
-        </div>
-        <div class="anime-details">
-        <h3 class="anime-title">${data.data.title}</h3>
-        <span class="anime-type">${data.data.authorId}</span>
-        <p class="anime-description">${data.data.description}</p>
-        <p class="anime-rating">${data.data.status}</p>
-        <p class="anime-year">${data.data.releaseDate}</p>
-        </div>
-      </div>
-    `;
+
+async function fetchAllMangas() {
+  try {
+      const response = await fetch('https://localhost:7162/api/Manga');
+
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const mangas = await response.json();
+
+      displayMangas(mangas);
+
+  } catch (error) {
+      console.error('Error fetching mangas:', error);
   }
+}
 
-//truncate function
-  function truncateText(text, maxLength) {
-    if (text.length > maxLength) {
-      return text.slice(0, maxLength) + "...";
-    }
-    return text;
-  }
+function displayMangas(mangas) {
+  animeEl.innerHTML = ''; // Xóa nội dung cũ
+  mangas.data.forEach(manga => {
+      const mangaItem = document.createElement('div');
+      mangaItem.classList.add('anime-card');
+      mangaItem.innerHTML = `
+          <img src="/Assert/Image/${manga.coverImage}" alt="${manga.title}" width="200" height="300">
+          <h3>${manga.title}</h3>
+      `;
+      mangaItem.addEventListener('click', function() {
+          window.location.href = `manga-detail.html?id=${manga.mangaId}`;
+      });
+      
+      animeEl.appendChild(mangaItem);
+  });
+}
 
-// simple form submission handling.
-
-const subscribeForm = document.getElementById("subscribe-form");
-
-subscribeForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const email = event.target.querySelector("input[type='email']").value;
-  // You can handle the form submission, e.g., send the email to a server, etc.
-  console.log(`Subscribed with email: ${email}`);
-  event.target.reset();
-});
+// Gọi hàm fetchAllMangas khi trang web được tải
+window.onload = fetchAllMangas;
