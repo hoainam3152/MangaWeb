@@ -62,6 +62,31 @@ namespace MangaAPI.Controllers
             }
         }
 
+        [HttpGet("nameTitle")]
+        public async Task<IActionResult> GetByNameTitle(string nameTitle)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var mangas = await service.GetMangasByTitleAsync(nameTitle);
+                    if (mangas != null)
+                    {
+                        return CustomResult(ResponseMessage.SUCCESSFUL, mangas, HttpStatusCode.OK);
+                    }
+                    return CustomResult(ResponseMessage.DATA_NOT_FOUND, HttpStatusCode.NotFound);
+                }
+                catch (Exception ex)
+                {
+                    return CustomResult(ex.Message, HttpStatusCode.BadRequest);
+                }
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(MangaRequest request)
         {

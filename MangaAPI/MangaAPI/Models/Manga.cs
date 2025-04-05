@@ -18,7 +18,7 @@ namespace MangaAPI.Models
         public int Status { get; set; }
         [StringLength(255)]
         public string? CoverImage { get; set; }
-        [StringLength(10)]
+        [StringLength(20)]
         public string? ReleaseDate { get; set; }
 
         [ForeignKey("AuthorId")]

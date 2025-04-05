@@ -10,5 +10,6 @@ namespace MangaAPI.Repositories
         Task<MangaResponse> CreateAsync(MangaRequest request);
         Task<bool> UpdateAsync(ulong MangaId, MangaRequest request);
         Task<bool> DeleteAsync(ulong MangaId);
+        Task<IEnumerable<MangaResponse>> GetMangasByTitleAsync(string mangaTitle);
     }
 }

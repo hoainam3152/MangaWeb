@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using MangaAPI.DTO.Requests;
 using MangaAPI.DTO.Responses;
 using MangaAPI.Enums;
@@ -21,19 +22,20 @@ namespace MangaAPI.Services
 
         public async Task<MangaResponse> CreateAsync(MangaRequest request)
         {
-            try
+            var mangaCreate = mapper.Map<Manga>(request);
+            mangaCreate.MangaId = GetMangaId();
+            if (request.ReleaseDate.HasValue)
             {
-                var mangaCreate = mapper.Map<Manga>(request);
-                mangaCreate.MangaId = GetMangaId();
-                mangaCreate.Status = ((int)EStatus.UPDATING);
-                context.Mangas.Add(mangaCreate);
-                await context.SaveChangesAsync();
-                return mapper.Map<MangaResponse>(mangaCreate);
+                mangaCreate.ReleaseDate = request.ReleaseDate.Value.ToString("dd-MM-yyyy");
             }
-            catch (Exception e)
+            else
             {
-                throw new Exception();
+                mangaCreate.ReleaseDate = null;
             }
+            mangaCreate.Status = ((int)EStatus.UPDATING);
+            context.Mangas.Add(mangaCreate);
+            await context.SaveChangesAsync();
+            return mapper.Map<MangaResponse>(mangaCreate);
         }
 
         public async Task<bool> DeleteAsync(ulong mangaId)
@@ -71,25 +73,26 @@ namespace MangaAPI.Services
 
         public async Task<bool> UpdateAsync(ulong MangaId, MangaRequest request)
         {
-            try
+            var manga = await context.Mangas.FirstOrDefaultAsync(g => g.MangaId == MangaId);
+            if (manga != null)
             {
-                var manga = await context.Mangas.FirstOrDefaultAsync(g => g.MangaId == MangaId);
-                if (manga != null)
+                manga.Title = request.Title;
+                manga.AuthorId = request.AuthorId;
+                manga.Description = request.Description;
+                manga.CoverImage = request.CoverImage;
+                //manga.ReleaseDate = request.ReleaseDate.GetValueOrDefault().ToString("dd-MM-yyyy");
+                if (request.ReleaseDate.HasValue)
                 {
-                    manga.Title = request.Title;
-                    manga.AuthorId = request.AuthorId;
-                    manga.Description = request.Description;
-                    manga.CoverImage = request.CoverImage;
-                    manga.ReleaseDate = request.ReleaseDate;
-                    await context.SaveChangesAsync();
-                    return true;
+                    manga.ReleaseDate = request.ReleaseDate.Value.ToString("dd-MM-yyyy");
                 }
-                return false;
+                else
+                {
+                    manga.ReleaseDate = null;
+                }
+                await context.SaveChangesAsync();
+                return true;
             }
-            catch (Exception e)
-            {
-                throw new Exception();
-            }
+            return false;
         }
 
         private ulong GetMangaId()
@@ -102,6 +105,14 @@ namespace MangaAPI.Services
                 return lastManga.MangaId + 1;
             else
                 return ulong.Parse(dateNow + "00");
+        }
+
+        public async Task<IEnumerable<MangaResponse>> GetMangasByTitleAsync(string mangaTitle)
+        {
+            var mangas = await context.Mangas
+                .Where(m => m.Title.ToLower().Contains(mangaTitle.ToLower()))
+                .ToListAsync();
+            return mapper.Map<IEnumerable<MangaResponse>>(mangas);
         }
     }
 }

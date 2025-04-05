@@ -4,6 +4,7 @@ using MangaAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MangaAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250405040633_UpdateTableAuthorAndSetDefaultValue")]
+    partial class UpdateTableAuthorAndSetDefaultValue
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,8 +46,7 @@ namespace MangaAPI.Migrations
 
                     b.Property<string>("BirthDate")
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
+                        .HasColumnType("nvarchar(max)")
                         .HasDefaultValue("Đang Cập Nhật");
 
                     b.HasKey("AuthorId");
@@ -95,8 +97,8 @@ namespace MangaAPI.Migrations
 
                     b.Property<string>("ReleaseDate")
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
                         .HasDefaultValue("Đang Cập Nhật");
 
                     b.Property<int>("Status")
