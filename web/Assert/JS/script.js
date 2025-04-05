@@ -1,21 +1,5 @@
 // JavaScript code can be added here for interactivity or dynamic content.
 const animeEl = document.getElementById("anime-list");
-const searchEl = document.getElementById("search-input");
-const formEl = document.getElementById("form");
-
-formEl.addEventListener('submit', async(e) => {
-  // prevent default form behaviour
-   e.preventDefault()
-
-  let searchString = searchEl.value;
-
-  try {
-
-  } catch (err) {
-    console.log(err);
-    animeEl.innerHTML = `<p>${err}</p>`;
-  }
-})
 
 async function fetchAllMangas() {
   try {
@@ -40,7 +24,7 @@ function displayMangas(mangas) {
       const mangaItem = document.createElement('div');
       mangaItem.classList.add('anime-card');
       mangaItem.innerHTML = `
-          <img src="/Assert/Image/${manga.coverImage}" alt="${manga.title}" width="200" height="300">
+          <img src="/Assert/Image/${manga.coverImage}" alt="${manga.title}" onerror="this.onerror=null;this.src='https://www.peeters-leuven.be/covers/no_cover.gif';" width="220" height="300" >
           <h3>${manga.title}</h3>
       `;
       mangaItem.addEventListener('click', function() {

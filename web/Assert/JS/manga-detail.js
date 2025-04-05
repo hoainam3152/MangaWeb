@@ -22,7 +22,7 @@ function displayMangaDetails(manga) {
     mangaDetails.innerHTML = `
             <div class="panel">
                 <div class="left-panel">
-                    <img src="/Assert/Image/${manga.data.coverImage}" alt="${manga.data.title}"> 
+                    <img src="/Assert/Image/${manga.data.coverImage}" alt="${manga.data.title}" onerror="this.onerror=null;this.src='https://www.peeters-leuven.be/covers/no_cover.gif';" width="220" height="300"> 
                 </div>
                 <div class="right-panel">
                     <div class="manga-detail">
@@ -31,19 +31,19 @@ function displayMangaDetails(manga) {
                             <h2>${manga.data.title}</h2>
                         </div>
                         <div class="manga-detail-information-item">
-                            <div class="item-title">Tên khác:</div>
+                            <div class="item-title"><i class="fa-solid fa-plus"></i>Tên khác:</div>
                             <div class="item-value">${manga.data.alternateTitle}</div>
                         </div>
                         <div class="manga-detail-information-item">
-                            <div class="item-title">Tác giả:</div>
+                            <div class="item-title"><i class="fa-solid fa-user"></i>Tác giả:</div>
                             <div class="item-value">${manga.data.author}</div>
                         </div>
                         <div class="manga-detail-information-item">
-                            <div class="item-title">Tình trạng:</div>
+                            <div class="item-title"><i class="fa-solid fa-wifi"></i>Tình trạng:</div>
                             <div class="item-value">${manga.data.status}</div>
                         </div>
                         <div class="manga-detail-information-item">
-                            <div class="item-title">Ngày phát hành:</div>
+                            <div class="item-title"><i class="fa-solid fa-calendar-days"></i>Ngày phát hành:</div>
                             <div class="item-value">${manga.data.releaseDate}</div>
                         </div>
                         </div>

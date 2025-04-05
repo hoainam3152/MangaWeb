@@ -1,9 +1,9 @@
 .container {
-    background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     margin-bottom: 50px;
+    padding: 10px;
 }
 
 .panel {
@@ -12,6 +12,7 @@
 }
 
 .description {
+    text-align: justify;
     margin-top: 20px;
 }
 
@@ -39,6 +40,7 @@
     flex-direction: column;
     gap: 24px;
     width: 70%;
+    border-radius: 8px;
 }
 
 .manga-detail {
@@ -55,7 +57,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin: 20px;
+    padding: 20px 24px;
 }
 
 .manga-detail-information-item {
@@ -85,4 +87,5 @@
     letter-spacing: .14px;
     line-height: 22px;
     width: 70%;
+    text-align: left;
 }

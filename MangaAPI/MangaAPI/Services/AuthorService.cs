@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using MangaAPI.DTO.Requests;
 using MangaAPI.DTO.Responses;
 using MangaAPI.Models;
@@ -24,6 +25,14 @@ namespace MangaAPI.Services
             {
                 var authorCreate = mapper.Map<Author>(request);
                 authorCreate.AuthorId = GetAuthorId();
+                if (request.BirthDate.HasValue)
+                {
+                    authorCreate.BirthDate = request.BirthDate.Value.ToString("dd-MM-yyyy");
+                }
+                else
+                {
+                    authorCreate.BirthDate = null;
+                }
                 context.Authors.Add(authorCreate);
                 await context.SaveChangesAsync();
                 return mapper.Map<AuthorResponse>(authorCreate);
@@ -74,7 +83,15 @@ namespace MangaAPI.Services
                 {
                     author.AuthorName = request.AuthorName;
                     author.Biography = request.Biography;
-                    author.BirthDate = request.BirthDate;
+                    //author.BirthDate = request.BirthDate;
+                    if (request.BirthDate.HasValue)
+                    {
+                        author.BirthDate = request.BirthDate.Value.ToString("dd-MM-yyyy");
+                    }
+                    else
+                    {
+                        author.BirthDate = null;
+                    }
                     author.AuthorImage = request.AuthorImage;
                     await context.SaveChangesAsync();
                     return true;

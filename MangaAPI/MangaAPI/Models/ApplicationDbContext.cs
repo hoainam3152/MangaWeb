@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using MangaAPI.Helpers;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,6 +42,19 @@ namespace MangaAPI.Models
                 entity.HasOne(e => e.Genre)
                     .WithMany(e => e.MangaGenres)
                     .HasForeignKey(e => e.GenreId);
+            });
+
+            modelBuilder.Entity<Manga>(entity =>
+            {
+                entity.Property(e => e.AlternateTitle).HasDefaultValue(MessageString.UPDATING);
+                entity.Property(e => e.Description).HasDefaultValue(MessageString.UPDATING);
+                entity.Property(e => e.ReleaseDate).HasDefaultValue(MessageString.UPDATING);
+            });
+
+            modelBuilder.Entity<Author>(entity =>
+            {
+                entity.Property(e => e.Biography).HasDefaultValue(MessageString.UPDATING);
+                entity.Property(e => e.BirthDate).HasDefaultValue(MessageString.UPDATING);
             });
         }
     }
