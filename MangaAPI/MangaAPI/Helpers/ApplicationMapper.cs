@@ -3,6 +3,7 @@ using MangaAPI.DTO.Requests;
 using MangaAPI.DTO.Responses;
 using MangaAPI.Enums;
 using MangaAPI.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace MangaAPI.Helpers
 {
@@ -28,6 +29,8 @@ namespace MangaAPI.Helpers
 
             CreateMap<MangaGenres, MangaGenresResponse>().ReverseMap();
             CreateMap<MangaGenres, MangaGenresRequest>().ReverseMap();
+
+            CreateMap<IdentityUser, AccountResponse>().ReverseMap();
         }
     }
 }

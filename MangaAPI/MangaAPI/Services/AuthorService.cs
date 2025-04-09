@@ -83,15 +83,7 @@ namespace MangaAPI.Services
                 {
                     author.AuthorName = request.AuthorName;
                     author.Biography = request.Biography;
-                    //author.BirthDate = request.BirthDate;
-                    if (request.BirthDate.HasValue)
-                    {
-                        author.BirthDate = request.BirthDate.Value.ToString("dd-MM-yyyy");
-                    }
-                    else
-                    {
-                        author.BirthDate = null;
-                    }
+                    author.BirthDate = request.BirthDate.HasValue ? request.BirthDate?.ToString("dd-MM-yyyy") : null;
                     author.AuthorImage = request.AuthorImage;
                     await context.SaveChangesAsync();
                     return true;

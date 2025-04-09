@@ -1,12 +1,18 @@
-﻿using MangaAPI.DTO;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Security.Claims;
+using CoreApiResponse;
+using MangaAPI.DTO;
+using MangaAPI.Helpers;
 using MangaAPI.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MangaAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class AccountController : BaseController
     {
         private readonly IAccountRepository _accountRepository;
 
@@ -37,6 +43,44 @@ namespace MangaAPI.Controllers
             }
 
             return Ok(result);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = ApplicationRole.Admin)]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                var accounts = await _accountRepository.GetAllAccountsAsync();
+                if (accounts.Any())
+                {
+                    return CustomResult(ResponseMessage.SUCCESSFUL, accounts, HttpStatusCode.OK);
+                }
+                return CustomResult(ResponseMessage.EMPTY, HttpStatusCode.NotFound);
+            }
+            catch (Exception ex)
+            {
+                return CustomResult(ex.Message, HttpStatusCode.BadRequest);
+            }
+        }
+
+        [HttpGet("id")]
+        [Authorize]
+        public async Task<IActionResult> GetById(string id)
+        {
+            try
+            {
+                var account = await _accountRepository.GetAccountAsync(id, User);
+                if (account != null)
+                {
+                    return CustomResult(ResponseMessage.SUCCESSFUL, account, HttpStatusCode.OK);
+                }
+                return CustomResult(ResponseMessage.DATA_NOT_FOUND, HttpStatusCode.NotFound);
+            }
+            catch (Exception ex)
+            {
+                return CustomResult(ex.Message, HttpStatusCode.BadRequest);
+            }
         }
     }
 }

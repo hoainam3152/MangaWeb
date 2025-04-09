@@ -2,6 +2,7 @@
 using MangaAPI.DTO.Requests;
 using MangaAPI.Helpers;
 using MangaAPI.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -9,6 +10,7 @@ namespace MangaAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "RequireAdminOrManagerRole")]
     public class AuthorController : BaseController
     {
         private readonly IAuthorRepository service;
@@ -19,6 +21,7 @@ namespace MangaAPI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
             try
@@ -37,6 +40,7 @@ namespace MangaAPI.Controllers
         }
 
         [HttpGet("id")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetById(ulong id)
         {
             if (ModelState.IsValid)
@@ -108,6 +112,7 @@ namespace MangaAPI.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = ApplicationRole.Admin)]
         public async Task<IActionResult> Delete(ulong id)
         {
             if (ModelState.IsValid)
