@@ -5,11 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using MangaGenresAPI.Repositories;
 using CoreApiResponse;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MangaAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "RequireAdminOrManagerRole")]
     public class MangaGenresController : BaseController
     {
         private readonly IMangaGenresRepository service;

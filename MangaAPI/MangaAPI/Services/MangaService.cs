@@ -77,18 +77,11 @@ namespace MangaAPI.Services
             if (manga != null)
             {
                 manga.Title = request.Title;
+                manga.AlternateTitle = request.AlternateTitle;
                 manga.AuthorId = request.AuthorId;
                 manga.Description = request.Description;
                 manga.CoverImage = request.CoverImage;
-                //manga.ReleaseDate = request.ReleaseDate.GetValueOrDefault().ToString("dd-MM-yyyy");
-                if (request.ReleaseDate.HasValue)
-                {
-                    manga.ReleaseDate = request.ReleaseDate.Value.ToString("dd-MM-yyyy");
-                }
-                else
-                {
-                    manga.ReleaseDate = null;
-                }
+                manga.ReleaseDate = request.ReleaseDate.HasValue ? request.ReleaseDate?.ToString("dd-MM-yyyy") : null;
                 await context.SaveChangesAsync();
                 return true;
             }

@@ -21,5 +21,6 @@
         public const string DUPLICATE_KEY = "Duplicate Key";
         public const string REFERENCE_ERROR = "Reference Error";
         public const string NAME_EXISTS = "Name Already Exists";
+        public const string NOT_PERMISION = "Not Permision";
     }
 }

@@ -1,3 +1,4 @@
+using MangaAPI.Helpers;
 using MangaAPI.Models;
 using MangaAPI.Repositories;
 using MangaAPI.Services;
@@ -66,6 +67,12 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SecretKey"]))
     };
 });
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireAdminOrManagerRole", policy => policy.RequireRole(
+            ApplicationRole.Admin, ApplicationRole.Manager
+        ));
+});
 builder.Services.AddAutoMapper(typeof(Program));
 
 //Register Service
@@ -100,6 +107,7 @@ app.UseHttpsRedirection();
 //User CORS Middleware
 app.UseCors("AllowMyOrigin");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
