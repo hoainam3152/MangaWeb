@@ -1,11 +1,11 @@
+# ![MangaWebsite](https://github.com/user-attachments/assets/b33d19f8-a1d4-4256-a5f3-0f56f137a323)
+
 <h1 align="center"> Manga Website </h1>
 
-![Image](https://github.com/user-attachments/assets/b33d19f8-a1d4-4256-a5f3-0f56f137a323)
-
-> Welcome to my personal manga website! This project is a hands-on endeavor to apply the knowledge and skills I've gained in my stuties and internship for position backend developer. However, 
+> Welcome to my manga website! This is a personal project, built simply for the love of sharing and discovering manga. Please keep in mind that this is a basic website, independently developed website, so you might encounter some limitations. If you are interested in trying it out or developing additional features, please read the instructions below.
 
 ## Prerequisites
-This project requires .Net Core 8.0 and IDE for languages, database and website interface. To make sure you have them available on your machine.
+This project requires .Net Core 8.0 and IDE for languages, database and website interface. Please ensure you have them installed on your machine.
 
 <h3 align="left">Languages and Tools:</h3>
 <p align="left"> 
@@ -44,3 +44,10 @@ Backend
 
 Frontend
 ![Image](https://github.com/user-attachments/assets/b33d19f8-a1d4-4256-a5f3-0f56f137a323)
+
+## Notes ##
+1. If you receive the error 'Attackers might be trying to steal your information from localhost (for example, passwords, messages, or credit cards)' on your first project startup while testing the API in Swagger, open cmd and run the command below:
+```sh
+//create SSL certificate if SSL security error occurs at startup
+dotnet dev-certs https --trust
+```
