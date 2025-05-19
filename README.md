@@ -36,7 +36,8 @@ Example:
 Tools -> NutGet Package Manager -> Package Manager Console.
 Update-Database
 ```
-5. Concurrently run the project and the index.html file in the 'web' folder (using Visual Studio Code).
+5. Sample Data: Execute the "data.sql" script to load the initial dataset.
+6. Concurrently run the project and the index.html file in the 'web' folder (using Visual Studio Code).
 
 **RESULT:**
 Backend
